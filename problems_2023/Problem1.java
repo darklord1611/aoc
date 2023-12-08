@@ -1,3 +1,5 @@
+package problems_2023;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -6,7 +8,7 @@ public class Problem1 {
   // ownerproof-3538742-1701522064-ef00932ae19f
 
   public static void main(String[] args) throws FileNotFoundException {
-    File file = new File("input.txt");
+    File file = new File("problem1_input.txt");
     Scanner scanner = new Scanner(file);
     List<String> strings = new ArrayList<>();
     while(scanner.hasNext()) {
