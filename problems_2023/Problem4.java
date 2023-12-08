@@ -3,6 +3,7 @@ package problems_2023;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,6 +11,8 @@ public class Problem4 {
 
 
   public static int solve(List<List<Integer>> winNums, List<List<Integer>> curNums) {
+    int[] scores = new int[winNums.size() + 1];
+    Arrays.fill(scores, 1);
     int n = winNums.size();
     int totalScore = 0;
     for(int i = 0; i < n; i++) {
@@ -17,20 +20,20 @@ public class Problem4 {
       int m = winNums.get(i).size();
       for(int j = 0; j < m; j++) {
         if(curNums.get(i).contains(winNums.get(i).get(j))) {
-          if(curScore == 0) {
-            curScore += 1;
-          } else {
-            curScore *= 2;
-          }
+          curScore++;
         }
       }
-      totalScore += curScore;
+      for(int k = 1; k <= curScore; k++) {
+        if (i + k < n) {
+          scores[i + k] += scores[i];
+        }
+      }
+      totalScore += scores[i];
     }
-
     return totalScore;
   }
   public static void main(String[] args) throws FileNotFoundException {
-    Scanner scanner = new Scanner(new File("C:\\Users\\Admin\\IdeaProjects\\aoc\\problem4_input.txt"));
+    Scanner scanner = new Scanner(new File("problem4_input.txt"));
     List<String> lines = new ArrayList<>();
     List<List<Integer>> winningNumbers = new ArrayList<>();
     List<List<Integer>> currentNumbers = new ArrayList<>();
