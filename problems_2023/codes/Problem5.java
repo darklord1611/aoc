@@ -11,17 +11,24 @@ public class Problem5 {
   public static long solve(List<List<String>> conditions, String seedStr) {
     long minLocation = Long.MAX_VALUE;
     String[] seeds = seedStr.split(" ");
-    for(String seed : seeds) {
-      long seedNum = Long.parseLong(seed);
-      long soilNum = findInRange(conditions, seedNum, 0);
-      long fertNum = findInRange(conditions, soilNum, 1);
-      long waterNum = findInRange(conditions, fertNum, 2);
-      long lightNum = findInRange(conditions, waterNum, 3);
-      long tempNum = findInRange(conditions, lightNum, 4);
-      long humidNum = findInRange(conditions, tempNum, 5);
-      long locationNum = findInRange(conditions, humidNum, 6);
-      System.out.println(locationNum);
-      minLocation = Math.min(minLocation,locationNum);
+    int n = seeds.length;
+    for(int i = 0; i < n; i += 2) {
+      if(i + 1 >= n) {
+        break;
+      }
+      long curNum = Long.parseLong(seeds[i]);
+      long curRange = Long.parseLong(seeds[i + 1]) + curNum;
+      for(long j = curNum; j <= curRange; j++) {
+        long soilNum = findInRange(conditions, j, 0);
+        long fertNum = findInRange(conditions, soilNum, 1);
+        long waterNum = findInRange(conditions, fertNum, 2);
+        long lightNum = findInRange(conditions, waterNum, 3);
+        long tempNum = findInRange(conditions, lightNum, 4);
+        long humidNum = findInRange(conditions, tempNum, 5);
+        long locationNum = findInRange(conditions, humidNum, 6);
+        System.out.println(locationNum);
+        minLocation = Math.min(minLocation, locationNum);
+      }
     }
 
     return minLocation;
