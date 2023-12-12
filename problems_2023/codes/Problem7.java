@@ -18,11 +18,13 @@ public class Problem7 {
   private static int HIGH_CARD = 1;
 
   private static List<Character> characters =
-          new ArrayList<>(List.of(new Character[]{'2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'}));
+          new ArrayList<>(List.of('J', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A'));
 
 
   public static int identifyHand(String hand) {
     Map<Character, Integer> freq = new HashMap<>();
+    char maxCh = hand.charAt(0);
+    int maxFreq = 0;
     for(int i = 0; i < hand.length(); i++) {
       Character character = hand.charAt(i);
       if(freq.get(character) == null) {
@@ -31,6 +33,19 @@ public class Problem7 {
         freq.put(character, freq.get(character) + 1);
       }
     }
+
+    for(Character ch : freq.keySet()) {
+      if(freq.get(ch) > maxFreq && ch != 'J') {
+        maxFreq = freq.get(ch);
+        maxCh = ch;
+      }
+    }
+
+    if(maxCh != 'J') {
+      freq.put(maxCh, freq.get(maxCh) + freq.getOrDefault('J', 0));
+      freq.remove('J');
+    }
+
 
     switch(freq.size()) {
       case 1 -> {
@@ -58,7 +73,6 @@ public class Problem7 {
             return THREE_OF_A_KIND;
           }
         }
-
         return TWO_PAIRS;
       }
 
